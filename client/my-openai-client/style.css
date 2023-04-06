@@ -238,7 +238,7 @@ body {
 
   .prompt-container {
     display: flex !important;
-    padding: 1rem;
+    padding: 0.5rem;
     background: #00523e;
     position: fixed;
     flex-direction: row !important;

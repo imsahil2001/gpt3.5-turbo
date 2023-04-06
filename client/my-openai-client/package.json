@@ -12,6 +12,7 @@
     "vite": "^4.2.0"
   },
   "dependencies": {
+    "dotenv": "^16.0.3",
     "pako": "^2.1.0",
     "react-spinners": "^0.13.8",
     "uuid": "^9.0.0"
