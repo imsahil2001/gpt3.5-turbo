@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <link rel="stylesheet" href="Primjs/prism.css"> -->
+    <link rel="stylesheet" href="style.css" />
+    <title>OPENAI</title>
+  </head>
+  <body>
+    <div id="app">
+      <div id="roles-container">
+        <div class="roles-container_heading">
+          <h1>Roles</h1>
+          <button id="hamburger-cross">X</button>
+        </div>
+        <div class="roles-container_box">
+          <hr>
+          <div class="roles-container_box_system">
+            <label for="">
+              System
+            </label>
+            <textarea
+            name="w3review"
+            rows="4"
+            cols="50"
+            id="systemTextarea"
+            placeholder="Write your query..."
+          ></textarea>          
+          </div>
+          <div class="roles-container_box_system">
+            <label for="">
+              User
+            </label>
+            <textarea
+            name="w3review"
+            rows="4"
+            cols="50"
+            id="userTextarea"
+            placeholder="Write your query..."
+          ></textarea>          
+          </div>
+        </div>
+      </div>
+      <div id="chat-container">
+        <div class="prompt-container">
+          <button id="hamburger"> <img src="hamburger.svg" alt=""> </button>
+          <textarea
+            id="prompt-input"
+            name="w3review"
+            rows="2"
+            cols="2"
+            placeholder="Write your query..."
+          ></textarea>
+        </div>
+        <div id="prompt-reply"></div>
+      </div>
+      
+    </div>
+    <!-- <script src="/client/my-openai-client/Primjs/prism.js"></script> -->
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>
