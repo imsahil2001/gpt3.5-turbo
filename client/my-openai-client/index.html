@@ -26,7 +26,7 @@
             rows="4"
             cols="50"
             id="systemTextarea"
-            placeholder="Write your query..."
+            placeholder="How you want the system be like"
           ></textarea>          
           </div>
           <div class="roles-container_box_system">
@@ -46,19 +46,26 @@
       <div id="chat-container">
         <div class="prompt-container">
           <button id="hamburger"> <img src="hamburger.svg" alt=""> </button>
-          <textarea
-            id="prompt-input"
-            name="w3review"
-            rows="2"
-            cols="2"
-            placeholder="Write your query..."
+          <div class="textarea-container">
+            <textarea
+              id="prompt-input"
+              name="w3review"
+              rows="2"
+              cols="30"
+              placeholder="Write your query..."
           ></textarea>
+          <button id="send"> 
+            <img src="send.svg" alt="">
+          </button>
+        </div>
         </div>
         <div id="prompt-reply"></div>
       </div>
       
     </div>
     <!-- <script src="/client/my-openai-client/Primjs/prism.js"></script> -->
-    <script type="module" src="/main.js"></script>
+    <script defer type="module" src="main.js"></script>
   </body>
 </html>
+
+

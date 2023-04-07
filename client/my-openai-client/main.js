@@ -1,22 +1,20 @@
 //import
 import { v4 as uuidv4 } from 'uuid';
-import pako from "pako";
-import dotenv from "dotenv";
-
-// dotenv.config();
-
 
 // DOM selectors
 const promptreply = document.getElementById("prompt-reply");
 const promptInput = document.getElementById("prompt-input");
+const promptContainer = document.querySelector(".prompt-container");
 const systemTextarea = document.getElementById("systemTextarea");
 const hamburger = document.getElementById("hamburger");
 const rolesContainer = document.getElementById("roles-container");
 const hamburgerCross = document.getElementById("hamburger-cross");
+const sendBtn = document.getElementById("send");
 
-let globalPrompt = "";
-let unZippedglobalPrompt;
+let globalPrompt = ""; //var to store the sumarry of prompt and reply bundle throught the chat
+let height = 0; // height for promptInput to adjust height of promptContainer
 
+// setting localStorages on load
 window.addEventListener("load", () => {
   if (localStorage.getItem("globalPrompt") == null)
     localStorage.setItem("globalPrompt", globalPrompt);
@@ -26,94 +24,107 @@ window.addEventListener("load", () => {
     systemTextarea.value = localStorage.getItem("systemPrompt");
 })
 
-let flag = 1;
-const API_KEY = "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";
+
+// adjusting height of promptInput and then adjusting promptContainer's height as well
+promptInput.addEventListener("input", () => {
+  promptInput.style.height = "5px";
+  promptInput.style.height = (promptInput.scrollHeight) + "px";
+  if (promptInput.clientHeight > height) {
+    height = promptInput.clientHeight;
+    promptContainer.style.height = (height * 0.06 + 2) + "rem";
+  }
+})
+
+
+// calling API on btn send click
+send.addEventListener("click", () => {
+  callToOpenAI();
+})
+
+// fcn to call to server
+const callToOpenAI = async () => {
+  promptreply.innerHTML += `<div class="promptdiv"><p class="lighter">${promptInput.value}</p></div>`;
+  promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
+
+  const query = promptInput.value;
+  globalPrompt = localStorage.getItem("globalPrompt")
+  globalPrompt += query;
+
+  promptInput.value = '';
+  try {
+    // API call to server
+    const fetchPromptReply = await fetch("http://localhost:5000/getreply", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        messages: [
+          {
+            role: 'system',
+            content: localStorage.getItem("systemPrompt"),
+          },
+          {
+            role: 'user',
+            content: globalPrompt,
+          },
+        ]
+      }),
+    });
+
+    // storing in local storage
+    localStorage.setItem("globalPrompt", globalPrompt);
+
+    if (fetchPromptReply.ok) {
+      const promptResponse = await fetchPromptReply.json();
+      console.log(promptResponse.replyMessage);
+      const result = copyCode(promptResponse.replyMessage);
+
+      // adding the response and prompts to later use it as prompt for summary
+      globalPrompt += promptResponse.replyMessage.trim() + "\n";
+
+      const uuid = uuidv4();
+      // result += "\n";
+      promptreply.innerHTML += `<div id="${uuid}" class="biggerReplyContainer"> ${result} <br></div>`;
+      promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
+
+      setInterval(() => {
+        promptreply.scrollTop = promptreply.scrollHeight;
+      }, 2000);
+    }
+
+
+    const summarizeChat = await fetch("http://localhost:5000/summarizing", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        globalPrompt: globalPrompt
+      }),
+    });
+
+    if (summarizeChat.ok) {
+      const response = await summarizeChat.json();
+      const summary = response.summarizedMsg;
+      console.log(`Summary ->> ${summary} `);
+      globalPrompt = summary;
+      localStorage.setItem("globalPrompt", globalPrompt)
+    }
+  }
+  catch (error) {
+    console.error(error);
+  }
+}
+
 
 promptInput.addEventListener("keydown", async (e) => {
   if (e.keyCode == 13 && e.ctrlKey) {
-    promptreply.innerHTML += `<div class="promptdiv"><p class="lighter">${promptInput.value}</p></div>`;
-    promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
-
-    const query = promptInput.value;
-    globalPrompt = localStorage.getItem("globalPrompt")
-    globalPrompt += query;
-
-    promptInput.value = '';
-    try {
-      // API call
-      const fetchPromptReply = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + API_KEY,
-        },
-        body: JSON.stringify({
-          model: "gpt-3.5-turbo",
-          temperature: 0.5,
-          messages: [
-            {
-              role: 'system',
-              content: localStorage.getItem("systemPrompt"),
-            },
-            {
-              role: 'user',
-              content: globalPrompt,
-            },
-          ]
-        }),
-      });
-
-      // storing in local storage
-      localStorage.setItem("globalPrompt", globalPrompt);
-
-      if (fetchPromptReply.ok) {
-        const reply = await fetchPromptReply.json();
-        console.log(reply.choices[0].message.content);
-        const result = copyCode(reply.choices[0].message.content);
-        const parsed = reply.choices[0].message.content.trim();
-
-        // adding the response and prompts to later use it as prompt for summary
-        globalPrompt += result + "\n";
-
-        const uuid = uuidv4();
-        promptreply.innerHTML += `<div id="${uuid}" class="biggerReplyContainer" >${result}</div>`;
-        promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
-
-        setInterval(() => {
-          promptreply.scrollTop = promptreply.scrollHeight;
-        }, 2000);
-      }
-
-
-      const summarizeChat = await fetch("https://api.openai.com/v1/completions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": "Bearer " + API_KEY,
-        },
-        body: JSON.stringify({
-          model: "text-davinci-003",
-          prompt: `Convert our chat that we had all had into a short summarize for rememberence \n\n Our chat is as follows : ${globalPrompt}.`,
-          temperature: 0,
-          max_tokens: 278,
-        }),
-      });
-
-      if (summarizeChat.ok) {
-        const response = await summarizeChat.json();
-        const summary = response.choices[0].text.trim();
-        console.log(`Summary ->> ${summary}`);
-        globalPrompt = summary;
-        localStorage.setItem("globalPrompt", globalPrompt)
-      }
-    }
-    catch (error) {
-      console.error(error);
-    }
+    callToOpenAI();
   }
 });
 
-
+//if reply has code in it, will add pre and code tag to the reply
 const copyCode = (content) => {
 
   const size = content.length;
@@ -148,6 +159,7 @@ const copyCode = (content) => {
 
 }
 
+//ctrl+enter send 
 systemTextarea.addEventListener("keyup", (e) => {
   localStorage.setItem("systemPrompt", systemTextarea.value);
 })
@@ -162,6 +174,7 @@ const globalPromptString = async () => {
   }
 }
 
+// ham burger opening and closing calls
 hamburger.addEventListener("click", () => {
   rolesContainer.style.left = "0%"
 })

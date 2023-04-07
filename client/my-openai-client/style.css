@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Mukta:wght@300;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nixie+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Vollkorn&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500&display=swap');
 
 
 * {
@@ -72,7 +73,7 @@ body {
 #chat-container {
   flex-basis: 80%;
   flex-grow: 1;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   height: 80%;
   max-width: 80%;
   margin-left: 20%;
@@ -84,9 +85,12 @@ body {
   justify-content: center;
   flex-direction: row;
   align-items: center;
-  background: #454545;
+  /* background: #454545; */
   height: 5rem;
   width: 100%;
+  /* overflow: hidden; */
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
   /* margin-bottom: 1rem; */
 }
 
@@ -105,25 +109,54 @@ body {
 }
 
 #prompt-input {
-  display: block;
-  padding-left: 1rem;
-  padding-top: .7rem;
-  /* position: fixed; */
+  /* display: block; */
+  padding: 1rem;
   font-size: 1rem;
-  width: 75%;
   height: 3rem;
-  margin: 10px;
   border-radius: 5px;
   border: 0;
   background: rgb(234, 234, 234);
   outline: none;
-  font-family: 'Mukta', sans-serif;
+  font-family: 'Rubik', sans-serif;
+  max-width: 90%;
+  flex-basis: 90%;
+  resize: none;
+
+}
+
+.textarea-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-basis: 90%;
+  max-width: 90%;
+  background: rgb(212, 212, 212);
+  margin: 10px;
+}
+
+#send {
+  position: relative;
+  width: 25px;
+  height: 39px;
+  flex-basis: 10%;
+  max-width: 10%;
+  border: none;
+}
+
+#send img {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 #prompt-reply {
   /* background: green; */
   /* padding: 1rem; */
   width: 100%;
+  margin-top: 4rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -208,7 +241,7 @@ body {
     z-index: 9999;
     left: -90%;
     width: 80%;
-    transition: 1s left cubic-bezier(.39, .27, .31, .95);
+    transition: 500ms left cubic-bezier(.39, .27, .31, .95);
   }
 
   .lighter {
@@ -225,8 +258,8 @@ body {
 
   #prompt-input {
     display: inline-block;
-    flex-basis: 85% !important;
-    max-width: 85% !important;
+    flex-basis: 95% !important;
+    max-width: 95% !important;
     height: 2.4rem;
     font-size: .9rem;
     padding-left: .9rem;
@@ -237,6 +270,7 @@ body {
   }
 
   .prompt-container {
+    /* mobile screen */
     display: flex !important;
     padding: 0.5rem;
     background: #00523e;
@@ -246,6 +280,24 @@ body {
     justify-content: space-between;
     height: 4rem;
   }
+
+  .textarea-container {
+    display: flex;
+    flex-basis: 90%;
+    max-width: 90%;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  #send img {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
 
   #hamburger {
     display: block;
