@@ -56,7 +56,7 @@ const callToOpenAI = async () => {
   promptInput.value = '';
   try {
     // API call to server
-    const fetchPromptReply = await fetch("http://localhost:5000/getreply", {
+    const fetchPromptReply = await fetch("https://gpt3-5-server.onrender.com/getreply", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -97,7 +97,7 @@ const callToOpenAI = async () => {
     }
 
 
-    const summarizeChat = await fetch("http://localhost:5000/summarizing", {
+    const summarizeChat = await fetch("https://gpt3-5-server.onrender.com/summarizing", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
