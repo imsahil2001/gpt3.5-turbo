@@ -184,10 +184,15 @@ const globalPromptString = async () => {
 // ham burger opening and closing calls
 hamburger.addEventListener("click", () => {
   rolesContainer.style.left = "0%"
-})
+});
 
 hamburgerCross.addEventListener("click", () => {
   rolesContainer.style.left = "-80%"
-})
+});
+
+// blur event for the hamburger to close sidebar
+hamburger.addEventListener("blur", () => {
+  rolesContainer.style.left = "-80%"
+});
 
 

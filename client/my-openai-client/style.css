@@ -281,7 +281,7 @@ body {
     z-index: 9999;
     left: -90%;
     width: 80%;
-    transition: 500ms left cubic-bezier(.39, .27, .31, .95);
+    transition: 350ms left cubic-bezier(.39, .27, .31, .95);
   }
 
   .lighter {
