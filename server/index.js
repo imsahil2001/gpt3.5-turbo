@@ -105,16 +105,6 @@ app.post("/summarizing", async (req, res) => {
       }),
     });
 
-    /*
-      You are a great summarizer! Whenever the user and you have a chat about some topic you will make a summary of it in such a way that whenever you are given that prompt you would make a decent memory of it. One thing to note is not to add any extra points from your own just make summary of context you are given no anything outside.
-
-      Context: '''
-      ${req.body.globalPrompt}
-      '''
-
-      Summary :
-    */
-
     if (summarizeChat.ok) {
       reply = await summarizeChat.json();
       console.log(reply.choices[0].text);

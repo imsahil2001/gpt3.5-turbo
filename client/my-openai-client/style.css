@@ -29,6 +29,7 @@ body {
   left: 0;
   font-family: 'Nixie One', cursive;
   height: 100%;
+
 }
 
 
@@ -46,14 +47,34 @@ body {
 .roles-container_box {
   margin-top: 2rem;
   font-family: 'Rubik', sans-serif;
+  overflow-y: scroll;
+  height: 82%;
 }
+
+.roles-container_box::-webkit-scrollbar {
+  width: 7px;
+  background: #a2bf99;
+}
+
+.roles-container_box::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgb(87, 87, 87);
+  border-radius: 10px;
+}
+
+.roles-container_box::-webkit-scrollbar-thumb {
+  background: #a4c499;
+  border-radius: 10px;
+}
+
+
 
 .roles-container_box_system {
   /* background: green; */
   padding-left: 1.3rem;
-
   padding: 1rem;
+
 }
+
 
 .roles-container_box_system label {
   font-size: 1.2rem;
@@ -71,6 +92,23 @@ body {
   font-family: 'Vollkorn', serif;
   height: 15.9rem;
 }
+
+.roles-container_box_summary {
+  padding-left: 1.3rem;
+  padding: 1rem;
+}
+
+#roles-container_box_summary_para {
+  /* padding-left: 1.3rem; */
+  margin-top: 1rem;
+  margin-right: .5rem;
+  padding: .5rem .5rem .5rem .5rem;
+  wrap: break-word;
+  background: #d8e9d2;
+  font-size: .8rem;
+  border-radius: 6px;
+}
+
 
 #chat-container {
   flex-basis: 80%;

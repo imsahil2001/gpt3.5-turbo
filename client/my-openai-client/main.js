@@ -10,6 +10,7 @@ const hamburger = document.getElementById("hamburger");
 const rolesContainer = document.getElementById("roles-container");
 const hamburgerCross = document.getElementById("hamburger-cross");
 const sendBtn = document.getElementById("send");
+const summaryPara = document.getElementById("roles-container_box_summary_para");
 
 let globalPrompt = ""; //var to store the sumarry of prompt and reply bundle throught the chat
 let height = 0; // height for promptInput to adjust height of promptContainer
@@ -112,6 +113,7 @@ const callToOpenAI = async () => {
       const summary = response.summarizedMsg;
       console.log(`Summary ->> ${summary} `);
       globalPrompt = summary;
+      summaryPara.textContent = globalPrompt;
       localStorage.setItem("globalPrompt", globalPrompt)
     }
   }
