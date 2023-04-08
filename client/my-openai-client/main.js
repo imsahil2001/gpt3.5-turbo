@@ -191,8 +191,8 @@ hamburgerCross.addEventListener("click", () => {
 });
 
 // blur event for the hamburger to close sidebar
-hamburger.addEventListener("blur", () => {
-  rolesContainer.style.left = "-80%"
-});
+// hamburger.addEventListener("blur", () => {
+//   rolesContainer.style.left = "-80%"
+// });
 
 
