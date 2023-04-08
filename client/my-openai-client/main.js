@@ -13,6 +13,7 @@ const sendBtn = document.getElementById("send");
 
 let globalPrompt = ""; //var to store the sumarry of prompt and reply bundle throught the chat
 let height = 0; // height for promptInput to adjust height of promptContainer
+let currentPrompt = ""; // current prompt to do prompt enginnering the input prompt 
 
 // setting localStorages on load
 window.addEventListener("load", () => {
@@ -46,9 +47,11 @@ const callToOpenAI = async () => {
   promptreply.innerHTML += `<div class="promptdiv"><p class="lighter">${promptInput.value}</p></div>`;
   promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
 
-  const query = promptInput.value;
+  currentPrompt = `Present Question: '''
+  ${promptInput.value}
+  '''`;
   globalPrompt = localStorage.getItem("globalPrompt")
-  globalPrompt += query;
+  globalPrompt += currentPrompt;
 
   promptInput.value = '';
   try {
@@ -120,6 +123,8 @@ const callToOpenAI = async () => {
 
 promptInput.addEventListener("keydown", async (e) => {
   if (e.keyCode == 13 && e.ctrlKey) {
+    promptContainer.style.height = "5rem";
+    promptInput.style.height = "3rem";
     callToOpenAI();
   }
 });

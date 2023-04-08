@@ -4,6 +4,7 @@ import cors from "cors";
 import { Configuration, OpenAIApi } from "openai";
 import fetch from "node-fetch";
 import clc from "cli-color";
+import timeout from "connect-timeout";
 
 const app = express();
 
@@ -44,7 +45,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/getreply", async (req, res) => {
+app.post("/getreply", timeout('90s'), async (req, res) => {
   console.log(req.body.messages);
   let reply = "";
 
@@ -83,6 +84,12 @@ app.post("/summarizing", async (req, res) => {
   console.log(req.body.globalPrompt);
   let reply = "";
 
+  const summaryContext = `You are a great summarizer! Whenever the user and you have a chat about some topic you will make a summary of it in such a way that whenever you are given that prompt you would make a decent memory of it. One thing to note is not to add any extra points from your own just make summary of context you are given no anything outside.
+  Context: '''
+  ${req.body.globalPrompt}
+  '''
+  Summary:`;
+
   try {
     const summarizeChat = await fetch("https://api.openai.com/v1/completions", {
       method: "POST",
@@ -92,11 +99,21 @@ app.post("/summarizing", async (req, res) => {
       },
       body: JSON.stringify({
         model: "text-davinci-003",
-        prompt: `Convert our chat that we had all had into a short summary for your rememberence so it will act like memory for you \n\n Our chat is as follows : ${req.body.globalPrompt}.`,
+        prompt: summaryContext,
         temperature: 0,
         max_tokens: 278,
       }),
     });
+
+    /*
+      You are a great summarizer! Whenever the user and you have a chat about some topic you will make a summary of it in such a way that whenever you are given that prompt you would make a decent memory of it. One thing to note is not to add any extra points from your own just make summary of context you are given no anything outside.
+
+      Context: '''
+      ${req.body.globalPrompt}
+      '''
+
+      Summary :
+    */
 
     if (summarizeChat.ok) {
       reply = await summarizeChat.json();
