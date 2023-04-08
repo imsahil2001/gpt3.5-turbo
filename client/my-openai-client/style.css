@@ -281,6 +281,7 @@ body {
     align-items: center;
     justify-content: space-between;
     height: 4rem;
+    width: 100%;
   }
 
   .textarea-container {
