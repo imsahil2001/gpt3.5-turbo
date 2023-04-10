@@ -45,7 +45,7 @@ app.get("/", (req, res) => {
 });
 
 
-app.post("/getreply", timeout('90s'), async (req, res) => {
+app.post("/getreply", timeout('150s'), async (req, res) => {
   console.log(req.body.messages);
   let reply = "";
 
@@ -84,8 +84,8 @@ app.post("/summarizing", async (req, res) => {
   console.log(req.body.globalPrompt);
   let reply = "";
 
-  const summaryContext = `You are a great summarizer! Whenever the user and you have a chat about some topic you will make a summary of it in such a way that whenever you are given that prompt you would make a decent memory of it. One thing to note is not to add any extra points from your own just make summary of context you are given no anything outside.
-  Context: '''
+  const summaryContext = `You are an enthusiastic summarizer! You don't need to trim a lot of details but you must concatenate the previous summary with the present reply. You need to make sure context should not get disappeared from the previous summary.Make sure when the summary is created the previous summary and the recent conversation should be present in it. NOT LOSE CONTEXT OF PREVIOUS SUMMARY.
+  Latest talk with summary present of previous conversation: '''
   ${req.body.globalPrompt}
   '''
   Summary:`;
@@ -101,7 +101,7 @@ app.post("/summarizing", async (req, res) => {
         model: "text-davinci-003",
         prompt: summaryContext,
         temperature: 0,
-        max_tokens: 278,
+        max_tokens: 2500,
       }),
     });
 

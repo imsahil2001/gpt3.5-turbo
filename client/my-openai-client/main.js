@@ -20,6 +20,7 @@ let currentPrompt = ""; // current prompt to do prompt enginnering the input pro
 window.addEventListener("load", () => {
   if (localStorage.getItem("globalPrompt") == null)
     localStorage.setItem("globalPrompt", globalPrompt);
+  else summaryPara.textContent = localStorage.getItem("globalPrompt")
   if (localStorage.getItem("systemPrompt") == null)
     localStorage.setItem("systemPrompt", systemTextarea.value);
   else
@@ -28,10 +29,16 @@ window.addEventListener("load", () => {
 
 
 // adjusting height of promptInput and then adjusting promptContainer's height as well
-promptInput.addEventListener("input", () => {
+promptInput.addEventListener("keyup", (e) => {
   promptInput.style.height = "5px";
   promptInput.style.height = (promptInput.scrollHeight) + "px";
   if (promptInput.clientHeight > height) {
+    height = promptInput.clientHeight;
+    promptContainer.style.height = (height * 0.06 + 2) + "rem";
+  }
+  //backspace functionality
+  if (e.keyCode == 8) {
+    // console.log(`hello`);
     height = promptInput.clientHeight;
     promptContainer.style.height = (height * 0.06 + 2) + "rem";
   }
@@ -92,12 +99,19 @@ const callToOpenAI = async () => {
       promptreply.innerHTML += `<div id="${uuid}" class="biggerReplyContainer"> ${result} <br></div>`;
       promptreply.scrollIntoView({ behavior: "smooth", block: "end" });
 
+
+      /** 
+       * 
+       * 
+      */
       setInterval(() => {
         promptreply.scrollTop = promptreply.scrollHeight;
       }, 2000);
     }
 
 
+    // https://gpt3-5-server.onrender.com
+    // http://localhost:5000
     const summarizeChat = await fetch("https://gpt3-5-server.onrender.com/summarizing", {
       method: "POST",
       headers: {

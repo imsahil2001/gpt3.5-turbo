@@ -104,7 +104,7 @@ body {
   margin-right: .5rem;
   padding: .5rem .5rem .5rem .5rem;
   wrap: break-word;
-  background: #d8e9d2;
+  background: #e4f0e0;
   font-size: .8rem;
   border-radius: 6px;
 }
@@ -133,6 +133,11 @@ body {
   border-top: 1px solid black;
   width: 80%;
   /* margin-bottom: 1rem; */
+  background: rgba(245, 245, 245, 0.3);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(11px);
+  -webkit-backdrop-filter: blur(11px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
 }
 
 #hamburger {
@@ -154,7 +159,8 @@ body {
   padding: 1rem;
   font-size: 1rem;
   height: 3rem;
-  border-radius: 5px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
   border: 0;
   background: rgb(234, 234, 234);
   outline: none;
@@ -162,26 +168,32 @@ body {
   max-width: 90%;
   flex-basis: 90%;
   resize: none;
+  overflow: hidden;
 }
 
 .textarea-container {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-basis: 90%;
   max-width: 90%;
-  background: rgb(212, 212, 212);
+  /* background: rgb(212, 212, 212); */
   margin: 10px;
 }
 
 #send {
   position: relative;
   width: 25px;
-  height: 39px;
-  flex-basis: 10%;
-  max-width: 10%;
+  height: 3rem;
+  flex-basis: 5%;
+  max-width: 5%;
   border: none;
+  background: transparent;
+  /* background: green; */
+  cursor: pointer;
 }
+
+
 
 #send img {
   position: absolute;
@@ -240,9 +252,9 @@ body {
 }
 
 .codingdiv {
-  background: rgb(47, 64, 93);
+  background: rgb(19 54 45);
   padding: 1rem;
-  border-radius: 3px;
+  border-radius: 8px;
 }
 
 .codingdiv code {
@@ -298,8 +310,8 @@ body {
 
   #prompt-input {
     display: inline-block;
-    flex-basis: 95% !important;
-    max-width: 95% !important;
+    flex-basis: 92% !important;
+    max-width: 92% !important;
     height: 2.4rem;
     font-size: .9rem;
     padding-left: .9rem;
@@ -320,6 +332,11 @@ body {
     justify-content: space-between;
     height: 4rem;
     width: 100%;
+    background: rgba(245, 245, 245, 0.3);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    backdrop-filter: blur(11px);
+    -webkit-backdrop-filter: blur(11px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
   }
 
   .textarea-container {
@@ -330,7 +347,13 @@ body {
     overflow: hidden;
   }
 
+  #send {
+    flex-basis: 10%;
+    max-width: 10%;
+  }
+
   #send img {
+    /* mobile size */
     position: absolute;
     width: 20px;
     height: 20px;

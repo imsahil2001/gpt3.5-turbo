@@ -30,7 +30,7 @@
           ></textarea>          
           </div>
           <div class="roles-container_box_summary">
-            <label for="">
+            <label for="" style="font-weight:500;">
               Summary
             </label>
             <p id="roles-container_box_summary_para"></p>        
@@ -50,11 +50,49 @@
               placeholder="Write your query..."
           ></textarea>
           <button id="send"> 
-            <img src="send.svg" alt="">
+            <img src="sendbtn.svg" alt="">
           </button>
         </div>
         </div>
-        <div id="prompt-reply"></div>
+        <div id="prompt-reply">
+          <!-- <div class="biggerReplyContainer">
+          <p class="darker">Sure, here's an example of how to use Spring's TaskScheduler interface to schedule a task:
+
+First, you need to create a class that implements the Runnable interface and defines the task that you want to schedule. Here's an example:
+
+</p><pre><div class="codingdiv"><code>public class MyTask implements Runnable {
+    @Override
+    public void run() {
+        // Define the task to be executed
+        System.out.println("Task executed at " + new Date());
+    }
+}
+</code></div></pre><p class="darker">
+
+Next, you need to create a configuration class that defines the TaskScheduler bean and schedules the task. Here's an example:
+
+</p><pre><div class="codingdiv"><code>@Configuration
+@EnableScheduling
+public class AppConfig implements SchedulingConfigurer {
+    @Override
+    public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
+        taskRegistrar.setScheduler(taskExecutor());
+        taskRegistrar.addFixedRateTask(new FixedRateTask(new MyTask(), 1000, 5000));
+    }
+
+    @Bean(destroyMethod="shutdown")
+    public Executor taskExecutor() {
+        return Executors.newScheduledThreadPool(10);
+    }
+}
+</code></div></pre><p class="darker">
+
+In this example, we're using a fixed rate task to execute the MyTask class every 5 seconds with an initial delay of 1 second. The task is executed using a ScheduledThreadPoolExecutor with a pool size of 10.
+
+Note that we're also using the @EnableScheduling annotation to enable Spring's scheduling support.
+
+I hope this helps! Let me know if you have any further questions.</p>
+        </div> -->
       </div>
       
     </div>
