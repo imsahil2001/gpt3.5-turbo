@@ -109,6 +109,19 @@ body {
   border-radius: 6px;
 }
 
+#eraseMemory {
+  margin-left: 4rem;
+  padding: .5rem;
+  border-radius: 4px;
+  border: none;
+  color: black;
+  font-weight: 600;
+}
+
+#eraseMemory:active {
+  background: #000;
+  color: white;
+}
 
 #chat-container {
   flex-basis: 80%;
@@ -379,6 +392,11 @@ body {
   .roles-container_heading h1 {
     flex-basis: 75%;
     max-width: 80%;
+  }
+
+  #eraseMemory {
+    margin-left: 4rem;
+
   }
 
   #hamburger-cross {
